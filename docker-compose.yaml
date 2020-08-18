@@ -21,11 +21,22 @@ services:
         networks:
             - app-network
         
-#   db:
-#       from: mysql:7.3
-#       volume: .:/
-#        networks:
-#            - app-network
+    db:
+        build: .docker/mysql
+        command: --innodb-use-native-aio=0
+        container_name: db
+        restart: always
+        tty: true
+        ports:
+            - "3306:3306"
+        volumes: 
+            - ./.docker/dbdata:/var/lib/mysql
+        environment:
+            - MYSQL_DATABASE=laravel
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=root
+        networks:
+            - app-network
        
     redis:
         image: redis:alpine
@@ -33,8 +44,6 @@ services:
             - 6379
         networks:
             - app-network
-       
-        
         
 networks:
     app-network:
