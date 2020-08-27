@@ -5,6 +5,11 @@ steps:
   args: ['-f', 'docker-compose.cloudbuild.yaml', 'up', '-d']
 
 
+- id: 'Chown in /var/www'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec','-u','root','-t','app','chown','-R','www-data:www-data','/var/www']
+
+
 - id: 'Rodando docker ps'
   name: 'gcr.io/cloud-builders/docker'
   args: ['ps']
@@ -19,3 +24,7 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: ['exec', '-t', 'app', 'cp', '.env.example', '.env']
 
+
+- id: 'Rodando key:generate'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', '-t', 'app', 'php', 'artisan', 'key:generate']
