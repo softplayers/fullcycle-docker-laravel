@@ -12,6 +12,10 @@ steps:
 
 - id: 'Rodando composer'
   name: 'gcr.io/cloud-builders/docker'
-  args: ['exec', 'app', 'composer', 'install']
+  args: ['exec', '-t', 'app', 'composer', 'install']
 
+
+- id: 'Copiando .env'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', '-t', 'app', 'cp', '.env.example', '.env']
 
