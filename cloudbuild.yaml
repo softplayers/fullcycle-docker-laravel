@@ -8,3 +8,10 @@ steps:
 - id: 'Rodando docker ps'
   name: 'gcr.io/cloud-builders/docker'
   args: ['ps']
+
+
+- id: 'Rodando composer'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['exec', 'app', 'composer', 'install']
+
+
