@@ -33,3 +33,4 @@ docker run --rm softplayers/codeeducation
 
 Imagem no Docker Hub:
 https://hub.docker.com/repository/docker/softplayers/codeeducation
+
