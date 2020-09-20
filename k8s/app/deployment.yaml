@@ -23,11 +23,11 @@ spec:
 
           env:
             - name: DB_PASSWORD
-              valueFrom: 
+              valueFrom:
                 secretKeyRef:
-                  name: mysql-pass
+                  name: laravel-mysql-secret
                   key: password
-          
+
           envFrom:
             - configMapRef:
                 name: app-conf
