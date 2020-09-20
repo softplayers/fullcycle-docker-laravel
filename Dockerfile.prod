@@ -15,8 +15,8 @@ RUN composer install && \
 RUN ln -s public html
 RUN ln -s /var/www /usr/share/nginx
 
-RUN usermod -u 1000 www-data
-USER www-data
+# RUN usermod -u 1000 www-data
+# USER www-data
 
 EXPOSE 9000
 ENTRYPOINT ["./k8s/app/entrypoint.sh"]
