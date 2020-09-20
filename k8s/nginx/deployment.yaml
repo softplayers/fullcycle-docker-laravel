@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: laravel-nginx
+  template:
+    metadata:
+      labels: 
+        app: laravel-nginx
+    spec:
+      containers:
+        - name: laravel-nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-conf
+              readOnly: true
+
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+
+
