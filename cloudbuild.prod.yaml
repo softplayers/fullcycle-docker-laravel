@@ -40,17 +40,17 @@ steps:
   args: ['exec', '-t', 'app', 'php', 'vendor/bin/phpunit', '-c', 'phpunit.xml']
 
 
-- id: "Building PROD"
+- id: "Building Image From Dockerfile.prod"
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA', '-f', 'Dockerfile.prod']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA', '-f', 'Dockerfile.prod', '.']
 
 
-- id: "Push PROD"
+- id: "Pushing Image"
   name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA']
 
 
-- id: "Kubernetes PROD Image name"
+- id: "Adjusting Deployment file - k8s"
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: '/bin/sh'
   args:
@@ -59,11 +59,12 @@ steps:
       sed 's#img-app-deployment#gcr.io/$PROJECT_ID/app-laravel:$SHORT_SHA#g' k8s/app/deployment.yaml > k8s/app/deployment-new.yaml
       cat k8s/app/deployment-new.yaml;
 
+
 - id: "Deploying K8s"
   name: 'gcr.io/cloud-builders/kubectl'
   args:
     - 'apply'
-    - 'f'
+    - '-f'
     - 'k8s/app/deployment-new.yaml'
   env:
     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
