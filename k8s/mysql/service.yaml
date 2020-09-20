@@ -6,6 +6,6 @@ spec:
   ports:
     - port: 3306
   selector:
-    app: laravel-mysql-server
+    app: laravel-mysql
     tier: db
   clusterIP: None
