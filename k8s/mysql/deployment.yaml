@@ -9,18 +9,18 @@ spec:
     matchLabels:
       app: laravel-mysql
       tier: db
-  
+
   template:
     metadata:
-      labels: 
+      labels:
         app: laravel-mysql
         tier: db
     spec:
       containers:
-        - image: mysql:5.7
-          name: mysql-server
-          args:
-            - "--ignore-db-dir=lost+found"
+        - image: mysql:latest
+          name: laravel-mysql
+          #args:
+          #  - "--ignore-db-dir=lost+found"
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
