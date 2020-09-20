@@ -13,6 +13,7 @@ RUN composer install && \
         echo chmod -R 777 storage
 
 RUN ln -s public html
+RUN ln -s /var/www /usr/share/nginx
 
 RUN usermod -u 1000 www-data
 USER www-data
